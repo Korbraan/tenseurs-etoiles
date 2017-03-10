@@ -1,7 +1,7 @@
 import query
 import fileManager
-from parser import parseFile
-#from query import query
+from ownParser import parseFile
+from query import query
 import requests
 import time
 from fileManager import save, load, FILE
@@ -26,12 +26,18 @@ def requestSPARQL(gene, drug):
         print ("[FAIL]"),
     return res.content
 
+
+res = requestSPARQL("PA7360","PA131301952")
+print (res)
+
 values = parseFile('./data/training_set_91_182.tsv')
 
 data = []
 
 l = len(values)
 i = 1
+
+
 #for value in values:
 #    print ("[%d/%d]\t" % (i, l)),
 #    res = requestSPARQL(gene=value[0], drug=value[1])

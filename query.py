@@ -20,11 +20,11 @@ PREFIX so: <http://bio2rdf.org/sequence_ontology:>
 PREFIX umls: <http://bio2rdf.org/umls:>
 PREFIX uniprot: <http://bio2rdf.org/uniprot:>
 
-CONSTRUCT {}
+SELECT ?drug_target
 WHERE {
-    pharmgkb:%(gene)s pharmgkbv:x-drugbank ?drug2.
-    pharmgkb:%(gene)s pharmgkbv:x-umls ?cui.
-    pharmgkb:%(gene)s pharmgkbv:x-pubchemcompound ?compound.
+    pharmgkb:%(drug)s pharmgkbv:x-drugbank ?drug2.
+    pharmgkb:%(drug)s pharmgkbv:x-umls ?cui.
+    pharmgkb:%(drug)s pharmgkbv:x-pubchemcompound ?compound.
     ?drug3 siderv:pubchem-flat-compound-id ?compound.
     ?drug_target dbv:drug ?drug2.
     ?drug_target dbv:action ?action.
@@ -32,8 +32,8 @@ WHERE {
     ?drug2 dbv:x-atc ?atc.
     ?drug_target dbv:target ?target.
     ?target dbv:x-uniprot ?prot.
-    pharmgkb:%(drug)s pharmgkbv:x-uniprot ?prot.
-    pharmgkb:%(drug)s pharmgkbv:x-ncbigene ?gene.
+    pharmgkb:%(gene)s pharmgkbv:x-uniprot ?prot.
+    pharmgkb:%(gene)s pharmgkbv:x-ncbigene ?gene.
     ?gene2 clinvarv:x-gene ?gene.
     ?gene2 clinvarv:x-sequence_ontology ?so.
     ?rcv clinvarv:Variant_Gene ?gene2.
