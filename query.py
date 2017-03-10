@@ -1,5 +1,4 @@
-"""
-# QUERY 1, to obtain the data graph represented in Figure 3.
+query = """
 PREFIX atc: <http://bio2rdf.org/atc:>
 PREFIX bio2rdfv: <http://bio2rdf.org/bio2rdf_vocabulary:>
 PREFIX clinvar: <http://bio2rdf.org/clinvar:>
@@ -22,34 +21,35 @@ PREFIX umls: <http://bio2rdf.org/umls:>
 PREFIX uniprot: <http://bio2rdf.org/uniprot:>
 
 CONSTRUCT {}
-WHERE {pharmgkb:PA131301952 pharmgkbv:x-drugbank ?drug2.
-       pharmgkb:PA131301952 pharmgkbv:x-umls ?cui.
-       pharmgkb:PA131301952 pharmgkbv:x-pubchemcompound ?compound.
-       ?drug3 siderv:pubchem-flat-compound-id ?compound.
-       ?drug_target dbv:drug ?drug2.
-       ?drug_target dbv:action ?action.
-       ?drug2 dbv:x-pubchemcompound ?compound.
-       ?drug2 dbv:x-atc ?atc.
-       ?drug_target dbv:target ?target.
-       ?target dbv:x-uniprot ?prot.
-       pharmgkb:PA7360 pharmgkbv:x-uniprot ?prot.
-       pharmgkb:PA7360 pharmgkbv:x-ncbigene ?gene.
-       ?gene2 clinvarv:x-gene ?gene.
-       ?gene2 clinvarv:x-sequence_ontology ?so.
-       ?rcv clinvarv:Variant_Gene ?gene2.
-       ?rcv clinvarv:Variant_Phenotype ?x.
-       ?x clinvarv:x-medgen ?disease2.
-       ?gene bio2rdfv:x-identifiers.org ?gene3.
-       ?var sio:SIO_000628 ?gene3.
-       ?var sio:SIO_000628 ?disease.
-       ?gene3 sio:SIO_000062 ?react.
-       ?disease sio:SIO_000095 ?mesh.
-       ?disease sio:SIO_000008 ?semantic_type.
-       ?disease skos:exactMatch ?disease2.
-       ?drug3 siderv:side-effect ?disease3.
-       ?disease skos:exactMatch ?disease3.
-       ?disease4 mapping:medispan_to_sider ?disease3.
-       ?disease2 mapping:clinvar_to_sider ?disease3.
-       ?disease2 mapping:clinvar_to_medispan ?disease4.
-      }
+WHERE {
+    pharmgkb:%(gene)s pharmgkbv:x-drugbank ?drug2.
+    pharmgkb:%(gene)s pharmgkbv:x-umls ?cui.
+    pharmgkb:%(gene)s pharmgkbv:x-pubchemcompound ?compound.
+    ?drug3 siderv:pubchem-flat-compound-id ?compound.
+    ?drug_target dbv:drug ?drug2.
+    ?drug_target dbv:action ?action.
+    ?drug2 dbv:x-pubchemcompound ?compound.
+    ?drug2 dbv:x-atc ?atc.
+    ?drug_target dbv:target ?target.
+    ?target dbv:x-uniprot ?prot.
+    pharmgkb:%(drug)s pharmgkbv:x-uniprot ?prot.
+    pharmgkb:%(drug)s pharmgkbv:x-ncbigene ?gene.
+    ?gene2 clinvarv:x-gene ?gene.
+    ?gene2 clinvarv:x-sequence_ontology ?so.
+    ?rcv clinvarv:Variant_Gene ?gene2.
+    ?rcv clinvarv:Variant_Phenotype ?x.
+    ?x clinvarv:x-medgen ?disease2.
+    ?gene bio2rdfv:x-identifiers.org ?gene3.
+    ?var sio:SIO_000628 ?gene3.
+    ?var sio:SIO_000628 ?disease.
+    ?gene3 sio:SIO_000062 ?react.
+    ?disease sio:SIO_000095 ?mesh.
+    ?disease sio:SIO_000008 ?semantic_type.
+    ?disease skos:exactMatch ?disease2.
+    ?drug3 siderv:side-effect ?disease3.
+    ?disease skos:exactMatch ?disease3.
+    ?disease4 mapping:medispan_to_sider ?disease3.
+    ?disease2 mapping:clinvar_to_sider ?disease3.
+    ?disease2 mapping:clinvar_to_medispan ?disease4.
+}
 """
