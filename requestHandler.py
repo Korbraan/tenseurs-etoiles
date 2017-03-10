@@ -1,10 +1,10 @@
 import query
 import fileManager
-from parser import *
+from parser import parseFile
 #from query import query
 import requests
 import time
-#from fileManager import save, load, FILE
+from fileManager import save, load, FILE
 
 USER = 'student'
 PASS = '5hoPpeR4'
