@@ -58,9 +58,9 @@ PREFIX uniprot: <http://bio2rdf.org/uniprot:>
 
 SELECT DISTINCT ?relation ?action
 WHERE {
-  pharmgkb:PA449053 pharmgkbv:x-drugbank ?drugbank.
+  pharmgkb:%(drug)s pharmgkbv:x-drugbank ?drugbank.
   ?relation dbv:drug ?drugbank.
-  pharmgkb:PA107 pharmgkbv:x-uniprot ?uniprot.
+  pharmgkb:%(gene)s pharmgkbv:x-uniprot ?uniprot.
   ?drugbankGene dbv:x-uniprot ?uniprot.
   {?relation dbv:target ?drugbankGene}
   UNION {?relation dbv:carrier ?drugbankGene}
