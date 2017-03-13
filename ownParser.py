@@ -5,6 +5,6 @@ def parseFile (fileName):
         values = []
         for line in f:
             if i != 0:
-                values.append(line.replace("\r\n", "").split("\t"))
+                values.append(line.replace("\r\n", "").split(","))
             i += 1;
         return values

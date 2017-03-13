@@ -1,7 +1,7 @@
 import query
 import fileManager
 from ownParser import parseFile
-from query import query
+from query import *
 import requests
 import time
 from fileManager import save, load, FILE
@@ -11,13 +11,29 @@ PASS = '5hoPpeR4'
 HEADER = 'application/sparql-results+json'
 ADDRESS = 'https://pgxlod.loria.fr/bigdata/namespace/kb/sparql'
 
-def requestSPARQL(gene, drug):
+#A utiliser pour itérer sur chaque bidule couple
+def requestSPARQLParam(gene, drug, queryChoice):
     print ("Request for (%s, %s)" % (gene, drug)),
     res = requests.post(
         ADDRESS,
         auth=(USER, PASS),
         headers={'Accept': HEADER},
-        data={'query': query % {'gene': gene, 'drug': drug}},
+        data={'query': queryChoice % {'gene': gene, 'drug': drug}},
+        verify=False
+    )
+    if res.status_code == 200:
+        print ("[OK]"),
+    else:
+        print ("[FAIL]"),
+    return res.content
+#Sans couple, balek
+def requestSPARQL(queryChoice):
+    print ("Request")
+    res = requests.post(
+        ADDRESS,
+        auth=(USER, PASS),
+        headers={'Accept': HEADER},
+        data={'query': queryChoice},
         verify=False
     )
     if res.status_code == 200:
@@ -26,10 +42,14 @@ def requestSPARQL(gene, drug):
         print ("[FAIL]"),
     return res.content
 
+#res1 = requestSPARQL(queryBasic)
+res = requestSPARQLParam("PA134879223","PA162372840",queryDrugBankParam)
+save(res,FILE)
+#print(res['body'])
 
-res = requestSPARQL("PA7360","PA131301952")
-print (res)
 
+
+#Ici il faut boucler sur les jeux d'entrainement pour récupérer quelquechose d'utile. Beaucoup de requêtes à lancer...
 values = parseFile('./data/training_set_91_182.tsv')
 
 data = []
@@ -46,4 +66,4 @@ i = 1
 #    data.append({'gene': value[0], 'drug': value[1], 'asso': value[2], 'json': res})
 #    print ("\n"),
 
-save(data, FILE)
+
