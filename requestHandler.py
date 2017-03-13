@@ -5,6 +5,9 @@ from query import *
 import requests
 import time
 from fileManager import save, load, FILE
+import csv
+import os
+
 
 USER = 'student'
 PASS = '5hoPpeR4'
@@ -41,6 +44,12 @@ def requestSPARQL(queryChoice):
     else:
         print ("[FAIL]"),
     return res.content
+
+
+with open("data"+os.sep+"training_set_91_91.tsv") as tsv:
+    for line in csv.reader(tsv, delimiter="\t"): #You can also use delimiter="\t" rather than giving a dialect.
+        print("params : ", line[0],line[1])
+        res = requestSPARQLParam(line[0],line[1],queryDrugBankParam)
 
 #res1 = requestSPARQL(queryBasic)
 res = requestSPARQLParam("PA134879223","PA162372840",queryDrugBankParam)
