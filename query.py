@@ -70,6 +70,60 @@ WHERE {
 }
 """
 
+queryDiseaseParam="""
+SELECT COUNT(DISTINCT ?disgeneDisease) AS ?numberOfDiseases
+WHERE {
+  %(gene)s pharmgkbv:x-ncbigene ?ncbigene.
+  {
+    ?ncbigene bio2rdfv:x-identifiers.org ?disgene.
+    ?disgeneVar sio:SIO_000628 ?disgene.
+    ?disgeneVar sio:SIO_000628 ?disgeneDisease.
+    ?disgeneDisease skos:exactMatch ?siderDisease.
+    %(drug)s pharmgkbv:x-pubchemcompound ?pubchem.
+    ?siderdrug siderv:pubchem-flat-compound-id ?pubchem.
+    {?siderdrug siderv:indication ?siderDisease}
+    UNION {?siderdrug siderv:side_effect ?siderDisease}
+  }
+
+  UNION{
+    ?ncbigene bio2rdfv:x-identifiers.org ?disgene.
+    ?disgeneVar sio:SIO_000628 ?disgene.
+    ?disgeneVar sio:SIO_000628 ?disgeneDisease.
+    ?disgeneDisease skos:exactMatch ?medispanDisease.
+    %(drug)s pharmgkbv:umls ?umls.
+    ?medispanDrug mapping:medispan_to_umls ?umls.
+    {?medispanDrug medispan:indication ?medispanDisease}
+    UNION {?medispanDrug medispan:side_effect ?medispanDisease}
+  }
+
+  UNION{
+    ?clinvarGene clinvarv:x-gene ?ncbigene.
+    ?clinvarVar clinvarv:Variant_Gene ?clinvarGene.
+    {?clinvarVar clinvarv:Variant_Phenotype ?clinvarDisease}
+    UNION {?clinvarVar clinvar:x-medgen ?clinvarDisease}
+    ?clinvarDisease mapping:clinvar_to_sider ?siderDisease.
+    ?disgeneDisease skos:exactMatch ?clinvarDisease.
+    %(drug)s pharmgkbv:x-pubchemcompound ?pubchem.
+    ?siderdrug siderv:pubchem-flat-compound-id ?pubchem.
+    {?siderdrug siderv:indication ?siderDisease}
+    UNION {?siderdrug siderv:side_effect ?siderDisease}
+  }
+
+  UNION{
+    ?clinvarGene clinvarv:x-gene ?ncbigene.
+    ?clinvarVar clinvarv:Variant_Gene ?clinvarGene.
+    {?clinvarVar clinvarv:Variant_Phenotype ?clinvarDisease}
+    UNION {?clinvarVar clinvar:x-medgen ?clinvarDisease}
+    ?clinvarDisease mapping:clinvar_to_medispan ?medispanDisease.
+    ?disgeneDisease skos:exactMatch ?clinvarDisease.
+    %(drug)s pharmgkbv:umls ?umls.
+    ?medispanDrug mapping:medispan_to_umls ?umls.
+    {?medispanDrug medispan:indication ?medispanDisease}
+    UNION {?medispanDrug medispan:side_effect ?medispanDisease}
+  }
+
+}"""
+
 queryBasic = """
 PREFIX atc: <http://bio2rdf.org/atc:>
 PREFIX bio2rdfv: <http://bio2rdf.org/bio2rdf_vocabulary:>

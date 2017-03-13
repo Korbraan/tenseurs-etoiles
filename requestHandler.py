@@ -43,7 +43,7 @@ def requestSPARQL(queryChoice):
     return res.content
 
 #res1 = requestSPARQL(queryBasic)
-res = requestSPARQLParam("PA134879223","PA162372840",queryDrugBankParam)
+res = requestSPARQLParam("PA107","PA451446",queryDrugBankParam)
 save(res,FILE)
 #print(res['body'])
 
