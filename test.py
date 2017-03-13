@@ -1,9 +1,12 @@
-from fileManager import save, load
+#from fileManager import save, load
 
-FILE = 'data.file'
+#FILE = 'data.file'
 
-data = load(FILE)
+#data = load(FILE)
 
-for d in data:
-    print "(%s, %s) -> %s" % (d['gene'], d['drug'], d['asso'])
-    print "%s" % (d['json'])
+#for d in data:
+#    print(d)
+    #print ("(%s, %s) -> %s" % (d['gene'], d['drug'], d['asso']))
+    #print ("%s" % (d['json']))
+
+
