@@ -56,7 +56,7 @@ PREFIX so: <http://bio2rdf.org/sequence_ontology:>
 PREFIX umls: <http://bio2rdf.org/umls:>
 PREFIX uniprot: <http://bio2rdf.org/uniprot:>
 
-SELECT DISTINCT ?relation ?action
+SELECT (COUNT (?action) AS ?numberOfaction)
 WHERE {
   pharmgkb:%(drug)s pharmgkbv:x-drugbank ?drugbank.
   ?relation dbv:drug ?drugbank.

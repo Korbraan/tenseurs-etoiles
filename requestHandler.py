@@ -50,9 +50,8 @@ with open("data"+os.sep+"training_set_91_91.tsv") as tsv:
     for line in csv.reader(tsv, delimiter="\t"): #You can also use delimiter="\t" rather than giving a dialect.
         print("params : ", line[0],line[1])
         res = requestSPARQLParam(line[0],line[1],queryDrugBankParam)
-
 #res1 = requestSPARQL(queryBasic)
-#res = requestSPARQLParam("PA134879223","PA162372840",queryDrugBankParam)
+res = requestSPARQLParam("PA134879223","PA162372840",queryDrugBankParam)
 save(res,FILE)
 #print(res['body'])
 
